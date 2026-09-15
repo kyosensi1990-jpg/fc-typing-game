@@ -2,53 +2,83 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HAW 限界タイピング</title>
+<title>HAW FC RAID TYPING</title>
 <style>
-:root{--bg:#090e1b;--panel:#151d35;--card:#1d2847;--text:#f6f7fb;--muted:#9eabc9;--accent:#7c9cff;--good:#62d69b;--bad:#ff6b7a}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1c2c58,#090e1b 52%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif}
-.wrap{width:min(1050px,calc(100% - 24px));margin:28px auto}.hero{text-align:center}.hero small{color:var(--muted);font-weight:900;letter-spacing:.16em}.hero h1{font-size:clamp(28px,5vw,48px);margin:7px 0}.hero p{color:var(--muted)}
-.panel{margin-top:18px;background:#151d35ee;border:1px solid #2c3a63;border-radius:20px;padding:22px;box-shadow:0 18px 55px #0005}.modes,.row,.actions{display:flex;gap:10px;flex-wrap:wrap}.modes{justify-content:center}.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:900;cursor:pointer;background:#2b3658;color:white}.btn.primary,.btn.active{background:var(--accent);color:#071126}.btn:disabled{opacity:.45;cursor:not-allowed}
-input{border:1px solid #40517f;background:#0d1428;color:white;border-radius:12px;padding:13px;font-size:17px;outline:none}input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7c9cff33}
-.hidden{display:none!important}.lobby{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{background:var(--card);border:1px solid #34446f;border-radius:16px;padding:17px}.roomcode{font:900 28px ui-monospace,monospace;letter-spacing:.12em}.players{margin:8px 0 0;padding:0;list-style:none}.players li{padding:7px 0;border-bottom:1px solid #ffffff12}
-.game{display:grid;grid-template-columns:1fr 230px;gap:15px}.top{display:flex;justify-content:space-between;align-items:center}.timer{font-size:38px;font-weight:900;font-variant-numeric:tabular-nums}.question{text-align:center;margin-top:18px;padding:28px 16px;background:var(--card);border:1px solid #34446f;border-radius:16px}.jp{font-size:clamp(23px,4vw,36px);font-weight:900;margin:8px}.roman,.progress{font:700 19px ui-monospace,monospace;word-break:break-all}.roman{color:var(--muted)}.progress{min-height:28px;margin-top:10px}.type{width:100%;margin-top:15px}.msg{min-height:24px;color:var(--muted);margin:9px 0}.stats{display:grid;gap:10px}.stat{background:var(--card);border:1px solid #34446f;border-radius:15px;padding:15px}.stat span{color:var(--muted);font-size:12px;font-weight:800}.stat strong{display:block;font-size:28px;margin-top:3px}.scoreboard{margin-top:14px}.scoreline{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ffffff12}.note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:12px}
-@media(max-width:760px){.lobby,.game{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.panel{padding:15px}}
+:root{--bg:#070b16;--panel:#121a31;--card:#1a2545;--text:#f7f8ff;--muted:#9da9c8;--accent:#7c9cff;--good:#64e2a3;--bad:#ff6175;--gold:#ffd76a}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#24376b,#070b16 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif}
+.wrap{width:min(1120px,calc(100% - 24px));margin:24px auto}.hero{text-align:center}.hero small{letter-spacing:.18em;color:var(--muted);font-weight:900}.hero h1{margin:5px 0;font-size:clamp(28px,5vw,48px)}.hero p{color:var(--muted);margin:4px}
+.panel{margin-top:16px;background:#121a31ee;border:1px solid #30416d;border-radius:20px;padding:20px;box-shadow:0 18px 60px #0006}.hidden{display:none!important}
+.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:900;cursor:pointer;background:#2b385f;color:#fff}.btn.primary{background:var(--accent);color:#081126}.btn.raid{background:linear-gradient(135deg,#ff6b72,#ffb45f);color:#24090b}.btn:disabled{opacity:.45}
+.modes,.row,.actions{display:flex;gap:10px;flex-wrap:wrap}.modes{justify-content:center}.lobby{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{background:var(--card);border:1px solid #354875;border-radius:16px;padding:16px}
+input{border:1px solid #405584;background:#0b1226;color:#fff;border-radius:12px;padding:13px;font-size:17px;outline:none}input:focus{border-color:var(--accent)}
+.roomcode{font:900 30px ui-monospace,monospace;letter-spacing:.14em}.players{list-style:none;padding:0}.players li,.scoreline{padding:7px 0;border-bottom:1px solid #ffffff12;display:flex;justify-content:space-between}
+.raidgrid{display:grid;grid-template-columns:1fr 250px;gap:15px}.boss{text-align:center;background:linear-gradient(180deg,#25152a,#151d35);border:1px solid #633d67;border-radius:18px;padding:18px;position:relative;overflow:hidden}
+.bossname{font-size:clamp(24px,4vw,38px);font-weight:1000}.phase{font-weight:900;color:#ffb5bf;margin:4px}.hpbar{height:28px;background:#080b12;border:2px solid #59627d;border-radius:999px;overflow:hidden;margin:12px 0;position:relative}.hpfill{height:100%;width:100%;background:linear-gradient(90deg,#e84155,#ff7a68);transition:width .2s}.hptext{position:absolute;inset:0;display:grid;place-items:center;font-weight:1000;text-shadow:0 2px 3px #000}
+.cast{margin:10px auto 0;max-width:650px}.castname{font-size:13px;color:#ffb7c0;font-weight:900}.castbar{height:10px;background:#0a0d16;border-radius:99px;overflow:hidden;margin-top:5px}.castfill{height:100%;width:0;background:#ffd36b}
+.question{text-align:center;margin-top:14px;padding:22px 14px;background:var(--card);border:1px solid #354875;border-radius:16px}.jp{font-size:clamp(22px,4vw,34px);font-weight:1000}.roman,.progress{font:700 18px ui-monospace,monospace;word-break:break-all}.roman{color:var(--muted);margin-top:5px}.progress{min-height:27px;margin-top:9px}.type{width:100%;margin-top:12px}.msg{text-align:center;min-height:30px;margin:8px;font-weight:900}.timer{font-size:34px;font-weight:1000}.top{display:flex;justify-content:space-between;align-items:center}
+.stats{display:grid;gap:10px}.stat{background:var(--card);border:1px solid #354875;border-radius:14px;padding:13px}.stat span{color:var(--muted);font-size:11px;font-weight:900}.stat strong{display:block;font-size:25px}.event{border:1px solid #765a2e;background:#2b2417;padding:12px;border-radius:13px;text-align:center;color:#ffe2a0;font-weight:900;margin-top:10px}
+.flash{animation:flash .35s}@keyframes flash{50%{filter:brightness(2)}}.shake{animation:shake .3s}@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.result{text-align:center}.result h2{font-size:42px;margin:5px}.clear{color:var(--gold)}.wipe{color:var(--bad)}.awards{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px}.award{background:var(--card);padding:12px 16px;border-radius:13px}
+.note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:10px}
+@media(max-width:760px){.lobby,.raidgrid{grid-template-columns:1fr}.panel{padding:14px}.stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body><div class="wrap">
-<div class="hero"><small>HUNDRED ACER WOOD</small><h1>FC身内ネタ 限界タイピング</h1><p>SOLO / CO-OP　60秒勝負</p></div>
+<div class="hero"><small>HUNDRED ACER WOOD</small><h1>FC RAID TYPING</h1><p>みんなで殴る。みんなでギミックを越える。</p></div>
 
 <section id="home" class="panel">
- <div class="modes"><button class="btn primary" id="soloBtn">SOLO</button><button class="btn" id="coopBtn">CO-OP</button></div>
- <div id="coopSetup" class="hidden" style="margin-top:18px">
-   <div class="lobby">
-    <div class="box"><b>① 名前</b><div class="row" style="margin-top:10px"><input id="name" maxlength="12" placeholder="Pooh Taros"></div></div>
-    <div class="box"><b>② 部屋</b><div class="actions" style="margin-top:10px"><button id="hostBtn" class="btn primary">部屋を作る</button><input id="joinCode" maxlength="6" placeholder="6桁コード"><button id="joinBtn" class="btn">参加</button></div></div>
-   </div>
-   <div id="lobby" class="box hidden" style="margin-top:14px">
-     <div>ルームコード</div><div id="roomCode" class="roomcode">------</div>
-     <div class="note">このコードをDiscordで共有。参加者が揃ったらホストが開始。</div>
-     <ul id="players" class="players"></ul>
-     <button id="coopStart" class="btn primary hidden" style="margin-top:12px">全員スタート</button>
-     <div id="netmsg" class="note"></div>
-   </div>
+ <div class="modes">
+  <button class="btn" id="soloBtn">SOLO</button>
+  <button class="btn" id="coopBtn">CO-OP</button>
+  <button class="btn raid" id="raidBtn">⚔ FC RAID</button>
+ </div>
+ <div id="setup" class="hidden" style="margin-top:18px">
+  <div class="lobby">
+   <div class="box"><b>① プレイヤー名</b><div class="row" style="margin-top:10px"><input id="name" maxlength="12" placeholder="Pooh Taros"></div></div>
+   <div class="box"><b>② パーティ募集</b><div class="actions" style="margin-top:10px"><button id="hostBtn" class="btn primary">部屋を作る</button><input id="joinCode" maxlength="6" placeholder="6桁コード"><button id="joinBtn" class="btn">参加</button></div></div>
+  </div>
+  <div id="lobby" class="box hidden" style="margin-top:14px">
+   <div>ルームコード</div><div id="roomCode" class="roomcode">------</div>
+   <div class="note">コードをDiscordで共有。2～8人くらい推奨。ホストが突入開始！</div>
+   <ul id="players" class="players"></ul>
+   <button id="partyStart" class="btn raid hidden">⚔ 突入開始</button>
+   <div id="netmsg" class="note"></div>
+  </div>
  </div>
 </section>
 
-<section id="gamePanel" class="panel hidden">
- <div class="game">
+<section id="raidPanel" class="panel hidden">
+ <div class="raidgrid">
   <main>
-   <div class="top"><b id="modeLabel">SOLO</b><div id="time" class="timer">60.0</div></div>
-   <div class="question"><div style="font-size:12px;color:var(--muted);font-weight:800">お題</div><div id="jp" class="jp"></div><div id="roman" class="roman"></div><div id="progress" class="progress"></div></div>
-   <input id="typeInput" class="type" disabled autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力">
+   <div class="top"><b id="modeLabel">FC RAID</b><div id="time" class="timer">90.0</div></div>
+   <div id="boss" class="boss">
+    <div class="phase" id="phase">PHASE 1</div>
+    <div class="bossname">絶・身内ネタウェポン</div>
+    <div class="hpbar"><div id="hpFill" class="hpfill"></div><div id="hpText" class="hptext">100%</div></div>
+    <div class="cast"><div id="castName" class="castname">---</div><div class="castbar"><div id="castFill" class="castfill"></div></div></div>
+   </div>
+   <div id="event" class="event hidden"></div>
+   <div class="question"><div id="jp" class="jp"></div><div id="roman" class="roman"></div><div id="progress" class="progress"></div></div>
+   <input id="typeInput" class="type" disabled autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力！">
    <div id="msg" class="msg"></div>
-   <div class="actions"><button id="soloStart" class="btn primary">スタート</button><button id="backBtn" class="btn">戻る</button></div>
-   <div class="note">shi / si、chi / ti、tsu / tu、cho / tyo など複数入力に対応。</div>
+   <div class="actions"><button id="soloStart" class="btn primary hidden">スタート</button><button id="backBtn" class="btn">戻る</button></div>
   </main>
   <aside>
-   <div class="stats"><div class="stat"><span>SCORE</span><strong id="score">0</strong></div><div class="stat"><span>COMBO</span><strong id="combo">0</strong></div><div class="stat"><span>正確率</span><strong id="accuracy">100%</strong></div><div class="stat"><span>クリア</span><strong id="clears">0</strong></div></div>
-   <div id="teamBox" class="box scoreboard hidden"><b>TEAM SCORE</b><div id="teamScore" style="font-size:30px;font-weight:900;margin:5px 0">0</div><div id="scoreboard"></div></div>
+   <div class="stats">
+    <div class="stat"><span>MY DAMAGE</span><strong id="damage">0</strong></div>
+    <div class="stat"><span>COMBO</span><strong id="combo">0</strong></div>
+    <div class="stat"><span>ACCURACY</span><strong id="accuracy">100%</strong></div>
+    <div class="stat"><span>LIMIT BREAK</span><strong id="lb">0%</strong></div>
+   </div>
+   <button id="lbBtn" class="btn raid hidden" style="width:100%;margin-top:10px">🔥 LIMIT BREAK</button>
+   <div class="box" style="margin-top:10px"><b>PARTY</b><div id="scoreboard"></div></div>
   </aside>
  </div>
+</section>
+
+<section id="resultPanel" class="panel hidden result">
+ <h2 id="resultTitle"></h2><div id="resultText"></div><div id="awards" class="awards"></div>
+ <button class="btn primary" onclick="location.reload()">タイトルへ</button>
 </section>
 </div>
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
@@ -61,38 +91,115 @@ const words=[
 ["俺はどう見てもSでしょ","おれはどうみてもえすでしょ"],["またくのハイアルテマリジャ","またくのはいあるてまりじゃ"],
 ["ねっとりMです","ねっとりえむです"],["ドコモのお姉さん","どこものおねえさん"],["寝ます！！！","ねます"],
 ["チー牛童貞","ちーぎゅうどうてい"],["むきむきエゾリス","むきむきえぞりす"]];
+
 const R={"あ":["a"],"い":["i","yi"],"う":["u","wu"],"え":["e"],"お":["o"],"か":["ka","ca"],"き":["ki"],"く":["ku","cu","qu"],"け":["ke"],"こ":["ko"],"さ":["sa"],"し":["shi","si","ci"],"す":["su"],"せ":["se","ce"],"そ":["so"],"た":["ta"],"ち":["chi","ti"],"つ":["tsu","tu"],"て":["te"],"と":["to"],"な":["na"],"に":["ni"],"ぬ":["nu"],"ね":["ne"],"の":["no"],"は":["ha"],"ひ":["hi"],"ふ":["fu","hu"],"へ":["he"],"ほ":["ho"],"ま":["ma"],"み":["mi"],"む":["mu"],"め":["me"],"も":["mo"],"や":["ya"],"ゆ":["yu"],"よ":["yo"],"ら":["ra"],"り":["ri"],"る":["ru"],"れ":["re"],"ろ":["ro"],"わ":["wa"],"を":["wo"],"ん":["n","nn","xn"],"が":["ga"],"ぎ":["gi"],"ぐ":["gu"],"げ":["ge"],"ご":["go"],"ざ":["za"],"じ":["ji","zi"],"ず":["zu"],"ぜ":["ze"],"ぞ":["zo"],"だ":["da"],"ぢ":["ji","di"],"づ":["zu","du"],"で":["de"],"ど":["do"],"ば":["ba"],"び":["bi"],"ぶ":["bu"],"べ":["be"],"ぼ":["bo"],"ぱ":["pa"],"ぴ":["pi"],"ぷ":["pu"],"ぺ":["pe"],"ぽ":["po"],"きゃ":["kya"],"きゅ":["kyu"],"きょ":["kyo"],"しゃ":["sha","sya"],"しゅ":["shu","syu"],"しょ":["sho","syo"],"ちゃ":["cha","tya"],"ちゅ":["chu","tyu"],"ちょ":["cho","tyo"],"にゃ":["nya"],"にゅ":["nyu"],"にょ":["nyo"],"ひゃ":["hya"],"ひゅ":["hyu"],"ひょ":["hyo"],"みゃ":["mya"],"みゅ":["myu"],"みょ":["myo"],"りゃ":["rya"],"りゅ":["ryu"],"りょ":["ryo"],"ぎゃ":["gya"],"ぎゅ":["gyu"],"ぎょ":["gyo"],"じゃ":["ja","jya","zya"],"じゅ":["ju","jyu","zyu"],"じょ":["jo","jyo","zyo"],"びゃ":["bya"],"びゅ":["byu"],"びょ":["byo"],"ぴゃ":["pya"],"ぴゅ":["pyu"],"ぴょ":["pyo"],"ふぁ":["fa","fwa"],"ふぃ":["fi","fwi"],"ふぇ":["fe","fwe"],"ふぉ":["fo","fwo"],"ー":["-"]};
-const $=x=>document.getElementById(x); let active=false,endAt=0,timer=null,last=-1,current=0,cands=[],score=0,combo=0,clears=0,keys=0,miss=0;
-let coop=false,isHost=false,peer=null,hostConn=null,connections=[],me="",room="",scores={};
+const $=x=>document.getElementById(x);
+let mode="raid",active=false,endAt=0,timer=null,last=-1,cands=[],damage=0,combo=0,keys=0,miss=0,clears=0,lb=0;
+let isHost=false,peer=null,hostConn=null,connections=[],me="",room="",party={},bossHP=12000,bossMax=12000,phase=1,nextGimmick=0,gimmick=null,gimmickEnd=0,gimmickProgress={};
 
 function tokens(k){let a=[];for(let i=0;i<k.length;){let p=k.slice(i,i+2);if(R[p]){a.push(p);i+=2}else{a.push(k[i]);i++}}return a}
 function opts(ts,i){if(ts[i]==="っ"&&i+1<ts.length){let n=R[ts[i+1]]||[""];let h=[...new Set(n.map(x=>x[0]).filter(x=>/[a-z]/.test(x)))];return h.length?h:["xtu","ltu"]}return R[ts[i]]||[ts[i]]}
-function romans(k){let ts=tokens(k),a=[""];for(let i=0;i<ts.length;i++){let b=[];for(let x of a)for(let o of opts(ts,i)){b.push(x+o);if(b.length>4000)break}a=b}return [...new Set(a)]}
-function pick(){let n=Math.floor(Math.random()*words.length);if(n===last)n=(n+1)%words.length;last=n;current=n;cands=romans(words[n][1]);$("jp").textContent=words[n][0];$("roman").textContent=cands[0];$("typeInput").value="";paint("")}
-function matches(v){return cands.filter(x=>x.startsWith(v))}
-function paint(v){let t=(matches(v)[0]||cands[0]||"");$("progress").innerHTML='<span style="color:var(--good)"></span><span style="color:var(--muted)"></span>';$("progress").children[0].textContent=v;$("progress").children[1].textContent=t.slice(v.length);$("roman").textContent=t}
-function stats(){ $("score").textContent=score;$("combo").textContent=combo;$("clears").textContent=clears;$("accuracy").textContent=(keys?Math.round(Math.max(0,keys-miss)/keys*100):100)+"%";if(coop)sendScore()}
-function resetStats(){score=combo=clears=keys=miss=0;stats()}
-function begin(at=Date.now()+1200){resetStats();pick();$("gamePanel").classList.remove("hidden");$("home").classList.add("hidden");$("soloStart").classList.toggle("hidden",coop);$("teamBox").classList.toggle("hidden",!coop);$("modeLabel").textContent=coop?"CO-OP":"SOLO";$("typeInput").disabled=true;$("msg").textContent="READY...";let wait=setInterval(()=>{let d=at-Date.now();if(d<=0){clearInterval(wait);active=true;endAt=performance.now()+60000;$("typeInput").disabled=false;$("typeInput").focus();$("msg").textContent="GO！";timer=setInterval(tick,50)}else $("time").textContent="60.0"},50)}
-function tick(){let l=Math.max(0,endAt-performance.now());$("time").textContent=(l/1000).toFixed(1);if(l<=0)finish()}
-function finish(){if(!active)return;active=false;clearInterval(timer);$("typeInput").disabled=true;$("time").textContent="0.0";$("msg").textContent=`終了！ ${clears}問 / ${score}点 / 正確率 ${$("accuracy").textContent}`;sendScore(true)}
-$("typeInput").addEventListener("input",()=>{if(!active)return;let v=$("typeInput").value.toLowerCase();keys++;if(v&&!matches(v).length){miss++;combo=0;$("typeInput").value=v.slice(0,-1);$("msg").textContent="MISS！";paint($("typeInput").value);stats();return}paint(v);if(cands.includes(v)){clears++;combo++;score+=v.length*10+Math.min(combo,10)*10;$("msg").textContent=combo>=3?combo+" COMBO！":"NICE！";stats();pick()}});
-$("soloBtn").onclick=()=>{coop=false;begin(Date.now()+300)};$("coopBtn").onclick=()=>{$("coopSetup").classList.toggle("hidden")};$("soloStart").onclick=()=>begin(Date.now()+300);
-$("backBtn").onclick=()=>location.reload();
-
-function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
-function peerId(c){return "hawtyping-"+c.toLowerCase()}
-function showLobby(){ $("lobby").classList.remove("hidden");$("roomCode").textContent=room;renderPlayers()}
-function renderPlayers(){let names=Object.keys(scores);$("players").innerHTML=names.map(n=>`<li>${esc(n)} <b style="float:right">${scores[n]||0}</b></li>`).join("");$("scoreboard").innerHTML=names.map(n=>`<div class="scoreline"><span>${esc(n)}</span><b>${scores[n]||0}</b></div>`).join("");$("teamScore").textContent=Object.values(scores).reduce((a,b)=>a+b,0)}
+function romans(k){let ts=tokens(k),a=[""];for(let i=0;i<ts.length;i++){let b=[];for(let x of a)for(let o of opts(ts,i)){b.push(x+o);if(b.length>5000)break}a=b}return [...new Set(a)]}
 function esc(s){let d=document.createElement("div");d.textContent=s;return d.innerHTML}
-function broadcast(data){connections.forEach(c=>{if(c.open)c.send(data)})}
-function onData(data,conn){if(data.type==="hello"&&isHost){let name=data.name||"Guest";conn.playerName=name;scores[name]=0;renderPlayers();broadcast({type:"roster",scores})}
- if(data.type==="roster"&&!isHost){scores=data.scores||{};renderPlayers()}
- if(data.type==="start"){begin(data.at)}
- if(data.type==="score"){scores[data.name]=data.score||0;renderPlayers();if(isHost)broadcast({type:"roster",scores})}}
-function wire(c){c.on("data",d=>onData(d,c));c.on("close",()=>{if(isHost&&c.playerName){delete scores[c.playerName];renderPlayers();broadcast({type:"roster",scores})}})}
-$("hostBtn").onclick=()=>{me=$("name").value.trim()||"Host";room=code();isHost=true;coop=true;scores={[me]:0};$("netmsg").textContent="接続準備中…";peer=new Peer(peerId(room));peer.on("open",()=>{$("netmsg").textContent="参加者を待っています";showLobby();$("coopStart").classList.remove("hidden")});peer.on("connection",c=>{connections.push(c);wire(c)});peer.on("error",e=>$("netmsg").textContent="接続エラー: "+e.type)};
-$("joinBtn").onclick=()=>{me=$("name").value.trim()||"Guest";room=$("joinCode").value.trim().toUpperCase();if(room.length!==6){alert("6桁のルームコードを入力してね");return}isHost=false;coop=true;scores={[me]:0};$("netmsg").textContent="接続中…";peer=new Peer();peer.on("open",()=>{hostConn=peer.connect(peerId(room),{reliable:true});hostConn.on("open",()=>{wire(hostConn);hostConn.send({type:"hello",name:me});$("netmsg").textContent="接続しました";showLobby()})});peer.on("error",e=>$("netmsg").textContent="接続エラー。コードを確認してね ("+e.type+")")};
-$("coopStart").onclick=()=>{let at=Date.now()+1800;broadcast({type:"start",at});begin(at)};
-function sendScore(){if(!coop)return;scores[me]=score;renderPlayers();let d={type:"score",name:me,score};if(isHost)broadcast({type:"roster",scores});else if(hostConn&&hostConn.open)hostConn.send(d)}
+function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
+function peerId(c){return "hawraid-"+c.toLowerCase()}
+function pick(){let n=Math.floor(Math.random()*words.length);if(n===last)n=(n+1)%words.length;last=n;cands=romans(words[n][1]);$("jp").textContent=words[n][0];$("roman").textContent=cands[0];$("typeInput").value="";paint("")}
+function matches(v){return cands.filter(x=>x.startsWith(v))}
+function paint(v){let t=matches(v)[0]||cands[0]||"";$("progress").innerHTML='<span style="color:var(--good)"></span><span style="color:var(--muted)"></span>';$("progress").children[0].textContent=v;$("progress").children[1].textContent=t.slice(v.length);$("roman").textContent=t}
+function render(){
+ $("damage").textContent=damage;$("combo").textContent=combo;$("accuracy").textContent=(keys?Math.round(Math.max(0,keys-miss)/keys*100):100)+"%";$("lb").textContent=lb+"%";
+ $("lbBtn").classList.toggle("hidden",lb<100||!active);
+ $("hpFill").style.width=Math.max(0,bossHP/bossMax*100)+"%";$("hpText").textContent=Math.max(0,Math.ceil(bossHP/bossMax*100))+"%";
+ let names=Object.keys(party);$("players").innerHTML=names.map(n=>`<li><span>${esc(n)}</span><b>${party[n]?.damage||0}</b></li>`).join("");
+ $("scoreboard").innerHTML=names.map(n=>`<div class="scoreline"><span>${esc(n)}</span><b>${party[n]?.damage||0}</b></div>`).join("");
+}
+function broadcast(d){connections.forEach(c=>{if(c.open)c.send(d)})}
+function sync(){if(!isHost)return;broadcast({type:"state",party,bossHP,phase,gimmick,gimmickEnd,gimmickProgress});render()}
+function hit(amount){damage+=amount;party[me]=party[me]||{damage:0,clears:0,miss:0};party[me].damage=damage;party[me].clears=clears;party[me].miss=miss;
+ if(mode==="raid"){if(isHost){bossHP=Math.max(0,bossHP-amount);sync();checkBoss()}else if(hostConn?.open)hostConn.send({type:"hit",name:me,amount,damage,clears,miss})}
+ render()}
+function begin(at=Date.now()+1500){
+ damage=combo=keys=miss=clears=lb=0;party[me]=party[me]||{damage:0,clears:0,miss:0};pick();
+ $("home").classList.add("hidden");$("raidPanel").classList.remove("hidden");$("resultPanel").classList.add("hidden");$("typeInput").disabled=true;$("msg").textContent="READY...";
+ bossMax=mode==="raid"?Math.max(9000,Object.keys(party).length*6500):999999; if(isHost||mode!=="raid")bossHP=bossMax;
+ phase=1;nextGimmick=at+15000;render();
+ let w=setInterval(()=>{if(Date.now()>=at){clearInterval(w);active=true;endAt=performance.now()+(mode==="raid"?90000:60000);$("typeInput").disabled=false;$("typeInput").focus();$("msg").textContent="GO！";timer=setInterval(tick,50)}},50)
+}
+function tick(){
+ let left=Math.max(0,endAt-performance.now());$("time").textContent=(left/1000).toFixed(1);
+ if(mode==="raid"&&isHost&&active){
+   if(Date.now()>=nextGimmick&&!gimmick)startGimmick();
+   if(gimmick){let dur=8000,remain=Math.max(0,gimmickEnd-Date.now());$("castFill").style.width=((dur-remain)/dur*100)+"%";if(remain<=0)resolveGimmick()}
+ }
+ if(left<=0)finish(false)
+}
+function checkBoss(){
+ let pct=bossHP/bossMax;
+ if(pct<=.66&&phase===1){phase=2;announce("PHASE 2：身内ネタ加速！");sync()}
+ if(pct<=.33&&phase===2){phase=3;announce("FINAL PHASE：時間切れまで殴れ！！");sync()}
+ if(bossHP<=0)finish(true)
+}
+function announce(t){$("event").textContent=t;$("event").classList.remove("hidden");setTimeout(()=>$("event").classList.add("hidden"),3500)}
+function startGimmick(){
+ let types=["dps","stack","tower","heal"],type=types[Math.floor(Math.random()*types.length)];
+ gimmick={type};gimmickEnd=Date.now()+8000;gimmickProgress={};Object.keys(party).forEach(n=>gimmickProgress[n]=0);
+ let names={dps:"DPSチェック：8秒で全員合計8問クリア！",stack:"頭割り：全員1問以上クリアしろ！",tower:"塔踏み：全員2問ずつ担当！",heal:"蘇生詠唱：『またくのハイアルテマリジャ』を打ちまくれ！"};
+ $("castName").textContent=names[type];announce("⚠ "+names[type]);sync()
+}
+function gimmickClearCount(){return Object.values(gimmickProgress).reduce((a,b)=>a+b,0)}
+function resolveGimmick(){
+ if(!gimmick)return;let ok=false,n=Object.keys(party).length;
+ if(gimmick.type==="dps")ok=gimmickClearCount()>=8;
+ if(gimmick.type==="stack")ok=Object.values(gimmickProgress).every(x=>x>=1);
+ if(gimmick.type==="tower")ok=Object.values(gimmickProgress).every(x=>x>=2);
+ if(gimmick.type==="heal")ok=gimmickClearCount()>=Math.max(4,n);
+ if(ok){bossHP=Math.max(0,bossHP-900);broadcast({type:"announce",text:"✨ ギミック成功！ ボスに900ダメージ！"});announce("✨ ギミック成功！")}
+ else{bossHP=Math.min(bossMax,bossHP+700);broadcast({type:"announce",text:"💥 ギミック失敗！ ボスが回復した！"});announce("💥 ギミック失敗！ ボスが回復！");$("boss").classList.add("shake");setTimeout(()=>$("boss").classList.remove("shake"),350)}
+ gimmick=null;$("castName").textContent="---";$("castFill").style.width="0";nextGimmick=Date.now()+14000;sync();checkBoss()
+}
+function finish(clear){
+ if(!active)return;active=false;clearInterval(timer);$("typeInput").disabled=true;
+ if(isHost&&mode==="raid")broadcast({type:"finish",clear,party,bossHP});
+ showResult(clear)
+}
+function showResult(clear){
+ active=false;$("raidPanel").classList.add("hidden");$("resultPanel").classList.remove("hidden");
+ $("resultTitle").textContent=clear?"DUTY COMPLETE":"DUTY FAILED";$("resultTitle").className=clear?"clear":"wipe";
+ let total=Object.values(party).reduce((a,p)=>a+(p.damage||0),0);$("resultText").textContent=`PARTY DAMAGE ${total} / BOSS HP ${Math.max(0,bossHP)}`;
+ let arr=Object.entries(party);if(!arr.length)return;
+ let top=[...arr].sort((a,b)=>(b[1].damage||0)-(a[1].damage||0))[0];
+ let clean=[...arr].sort((a,b)=>(a[1].miss||0)-(b[1].miss||0))[0];
+ let clearKing=[...arr].sort((a,b)=>(b[1].clears||0)-(a[1].clears||0))[0];
+ $("awards").innerHTML=`<div class="award">⚔ 猛攻王<br><b>${esc(top[0])}</b></div><div class="award">✨ 精密機械<br><b>${esc(clean[0])}</b></div><div class="award">⌨ タイピングゴリラ<br><b>${esc(clearKing[0])}</b></div>`;
+}
+$("typeInput").addEventListener("input",()=>{
+ if(!active)return;let v=$("typeInput").value.toLowerCase();keys++;
+ if(v&&!matches(v).length){miss++;combo=0;$("typeInput").value=v.slice(0,-1);$("msg").textContent="MISS！";paint($("typeInput").value);party[me].miss=miss;render();return}
+ paint(v);
+ if(cands.includes(v)){clears++;combo++;let amount=120+v.length*8+Math.min(combo,10)*12;lb=Math.min(100,lb+8);$("msg").textContent=`⚔ ${amount} DAMAGE！`;hit(amount);
+   if(mode==="raid"&&gimmick){if(isHost){gimmickProgress[me]=(gimmickProgress[me]||0)+1;sync()}else hostConn?.send({type:"gprogress",name:me})}
+   pick()
+ }
+});
+$("lbBtn").onclick=()=>{if(lb<100||!active)return;lb=0;let amount=1500;hit(amount);$("msg").textContent="🔥 LIMIT BREAK！！ 1500 DAMAGE！";$("boss").classList.add("flash");setTimeout(()=>$("boss").classList.remove("flash"),400)};
+$("backBtn").onclick=()=>location.reload();
+$("soloBtn").onclick=()=>{mode="solo";me="SOLO";party={[me]:{damage:0,clears:0,miss:0}};$("modeLabel").textContent="SOLO";begin(Date.now()+500)};
+$("coopBtn").onclick=()=>{mode="coop";$("setup").classList.remove("hidden");$("raidBtn").classList.remove("raid")};
+$("raidBtn").onclick=()=>{mode="raid";$("setup").classList.remove("hidden");$("raidBtn").classList.add("raid")};
+
+function showLobby(){$("lobby").classList.remove("hidden");$("roomCode").textContent=room;render()}
+function wire(c){c.on("data",d=>onData(d,c));c.on("close",()=>{if(isHost&&c.playerName){delete party[c.playerName];sync()}})}
+function onData(d,c){
+ if(d.type==="hello"&&isHost){c.playerName=d.name||"Guest";party[c.playerName]={damage:0,clears:0,miss:0};broadcast({type:"roster",party});render()}
+ if(d.type==="roster"&&!isHost){party=d.party||{};render()}
+ if(d.type==="start"){mode=d.mode||"raid";bossMax=d.bossMax;bossHP=d.bossMax;begin(d.at)}
+ if(d.type==="hit"&&isHost){party[d.name]={damage:d.damage,clears:d.clears,miss:d.miss};bossHP=Math.max(0,bossHP-d.amount);sync();checkBoss()}
+ if(d.type==="gprogress"&&isHost&&gimmick){gimmickProgress[d.name]=(gimmickProgress[d.name]||0)+1;sync()}
+ if(d.type==="state"&&!isHost){party=d.party||party;bossHP=d.bossHP;phase=d.phase;gimmick=d.gimmick;gimmickEnd=d.gimmickEnd;gimmickProgress=d.gimmickProgress||{};$("phase").textContent="PHASE "+phase;if(gimmick){let nm={dps:"DPS CHECK",stack:"頭割り",tower:"塔踏み",heal:"蘇生詠唱"};$("castName").textContent=nm[gimmick.type]}else{$("castName").textContent="---";$("castFill").style.width="0"}render()}
+ if(d.type==="announce")announce(d.text)
+ if(d.type==="finish"){party=d.party;bossHP=d.bossHP;showResult(d.clear)}
+}
+$("hostBtn").onclick=()=>{me=$("name").value.trim()||"Host";room=code();isHost=true;party={[me]:{damage:0,clears:0,miss:0}};$("netmsg").textContent="接続準備中…";peer=new Peer(peerId(room));peer.on("open",()=>{$("netmsg").textContent="参加者を待っています";showLobby();$("partyStart").classList.remove("hidden")});peer.on("connection",c=>{connections.push(c);wire(c)});peer.on("error",e=>$("netmsg").textContent="接続エラー: "+e.type)};
+$("joinBtn").onclick=()=>{me=$("name").value.trim()||"Guest";room=$("joinCode").value.trim().toUpperCase();if(room.length!==6){alert("6桁のルームコードを入力してね");return}isHost=false;party={[me]:{damage:0,clears:0,miss:0}};$("netmsg").textContent="接続中…";peer=new Peer();peer.on("open",()=>{hostConn=peer.connect(peerId(room),{reliable:true});hostConn.on("open",()=>{wire(hostConn);hostConn.send({type:"hello",name:me});$("netmsg").textContent="接続しました";showLobby()})});peer.on("error",e=>$("netmsg").textContent="接続エラー。コードを確認してね ("+e.type+")")};
+$("partyStart").onclick=()=>{let at=Date.now()+1800;if(mode==="coop"){bossMax=999999}else bossMax=Math.max(9000,Object.keys(party).length*6500);bossHP=bossMax;broadcast({type:"start",at,mode,bossMax});begin(at)};
 </script></body></html>
