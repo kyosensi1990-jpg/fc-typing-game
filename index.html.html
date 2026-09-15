@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HAW 限界タイピング</title>
+<style>
+:root{--bg:#090e1b;--panel:#151d35;--card:#1d2847;--text:#f6f7fb;--muted:#9eabc9;--accent:#7c9cff;--good:#62d69b;--bad:#ff6b7a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1c2c58,#090e1b 52%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif}
+.wrap{width:min(1050px,calc(100% - 24px));margin:28px auto}.hero{text-align:center}.hero small{color:var(--muted);font-weight:900;letter-spacing:.16em}.hero h1{font-size:clamp(28px,5vw,48px);margin:7px 0}.hero p{color:var(--muted)}
+.panel{margin-top:18px;background:#151d35ee;border:1px solid #2c3a63;border-radius:20px;padding:22px;box-shadow:0 18px 55px #0005}.modes,.row,.actions{display:flex;gap:10px;flex-wrap:wrap}.modes{justify-content:center}.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:900;cursor:pointer;background:#2b3658;color:white}.btn.primary,.btn.active{background:var(--accent);color:#071126}.btn:disabled{opacity:.45;cursor:not-allowed}
+input{border:1px solid #40517f;background:#0d1428;color:white;border-radius:12px;padding:13px;font-size:17px;outline:none}input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7c9cff33}
+.hidden{display:none!important}.lobby{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{background:var(--card);border:1px solid #34446f;border-radius:16px;padding:17px}.roomcode{font:900 28px ui-monospace,monospace;letter-spacing:.12em}.players{margin:8px 0 0;padding:0;list-style:none}.players li{padding:7px 0;border-bottom:1px solid #ffffff12}
+.game{display:grid;grid-template-columns:1fr 230px;gap:15px}.top{display:flex;justify-content:space-between;align-items:center}.timer{font-size:38px;font-weight:900;font-variant-numeric:tabular-nums}.question{text-align:center;margin-top:18px;padding:28px 16px;background:var(--card);border:1px solid #34446f;border-radius:16px}.jp{font-size:clamp(23px,4vw,36px);font-weight:900;margin:8px}.roman,.progress{font:700 19px ui-monospace,monospace;word-break:break-all}.roman{color:var(--muted)}.progress{min-height:28px;margin-top:10px}.type{width:100%;margin-top:15px}.msg{min-height:24px;color:var(--muted);margin:9px 0}.stats{display:grid;gap:10px}.stat{background:var(--card);border:1px solid #34446f;border-radius:15px;padding:15px}.stat span{color:var(--muted);font-size:12px;font-weight:800}.stat strong{display:block;font-size:28px;margin-top:3px}.scoreboard{margin-top:14px}.scoreline{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ffffff12}.note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:12px}
+@media(max-width:760px){.lobby,.game{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.panel{padding:15px}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="hero"><small>HUNDRED ACER WOOD</small><h1>FC身内ネタ 限界タイピング</h1><p>SOLO / CO-OP　60秒勝負</p></div>
+
+<section id="home" class="panel">
+ <div class="modes"><button class="btn primary" id="soloBtn">SOLO</button><button class="btn" id="coopBtn">CO-OP</button></div>
+ <div id="coopSetup" class="hidden" style="margin-top:18px">
+   <div class="lobby">
+    <div class="box"><b>① 名前</b><div class="row" style="margin-top:10px"><input id="name" maxlength="12" placeholder="Pooh Taros"></div></div>
+    <div class="box"><b>② 部屋</b><div class="actions" style="margin-top:10px"><button id="hostBtn" class="btn primary">部屋を作る</button><input id="joinCode" maxlength="6" placeholder="6桁コード"><button id="joinBtn" class="btn">参加</button></div></div>
+   </div>
+   <div id="lobby" class="box hidden" style="margin-top:14px">
+     <div>ルームコード</div><div id="roomCode" class="roomcode">------</div>
+     <div class="note">このコードをDiscordで共有。参加者が揃ったらホストが開始。</div>
+     <ul id="players" class="players"></ul>
+     <button id="coopStart" class="btn primary hidden" style="margin-top:12px">全員スタート</button>
+     <div id="netmsg" class="note"></div>
+   </div>
+ </div>
+</section>
+
+<section id="gamePanel" class="panel hidden">
+ <div class="game">
+  <main>
+   <div class="top"><b id="modeLabel">SOLO</b><div id="time" class="timer">60.0</div></div>
+   <div class="question"><div style="font-size:12px;color:var(--muted);font-weight:800">お題</div><div id="jp" class="jp"></div><div id="roman" class="roman"></div><div id="progress" class="progress"></div></div>
+   <input id="typeInput" class="type" disabled autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力">
+   <div id="msg" class="msg"></div>
+   <div class="actions"><button id="soloStart" class="btn primary">スタート</button><button id="backBtn" class="btn">戻る</button></div>
+   <div class="note">shi / si、chi / ti、tsu / tu、cho / tyo など複数入力に対応。</div>
+  </main>
+  <aside>
+   <div class="stats"><div class="stat"><span>SCORE</span><strong id="score">0</strong></div><div class="stat"><span>COMBO</span><strong id="combo">0</strong></div><div class="stat"><span>正確率</span><strong id="accuracy">100%</strong></div><div class="stat"><span>クリア</span><strong id="clears">0</strong></div></div>
+   <div id="teamBox" class="box scoreboard hidden"><b>TEAM SCORE</b><div id="teamScore" style="font-size:30px;font-weight:900;margin:5px 0">0</div><div id="scoreboard"></div></div>
+  </aside>
+ </div>
+</section>
+</div>
+<script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+<script>
+const words=[
+["俺はカフカ","おれはかふか"],["もぎもぎ～","もぎもぎ"],["ここには何もない","ここにはなにもない"],["さかなクン","さかなくん"],
+["ぱむぱむ～","ぱむぱむ"],["時代はインセインエアー","じだいはいんせいんえあー"],["ちょっと食べるラー油","ちょっとたべるらーゆ"],
+["ファンフェスまでに痩せないと","ふぁんふぇすまでにやせないと"],["エイペックスやりましょうよー","えいぺっくすやりましょうよー"],
+["アルミホイルエゾリス","あるみほいるえぞりす"],["アダムナガイ","あだむながい"],["俺クラス８人","おれくらすはちにん"],
+["俺はどう見てもSでしょ","おれはどうみてもえすでしょ"],["またくのハイアルテマリジャ","またくのはいあるてまりじゃ"],
+["ねっとりMです","ねっとりえむです"],["ドコモのお姉さん","どこものおねえさん"],["寝ます！！！","ねます"],
+["チー牛童貞","ちーぎゅうどうてい"],["むきむきエゾリス","むきむきえぞりす"]];
+const R={"あ":["a"],"い":["i","yi"],"う":["u","wu"],"え":["e"],"お":["o"],"か":["ka","ca"],"き":["ki"],"く":["ku","cu","qu"],"け":["ke"],"こ":["ko"],"さ":["sa"],"し":["shi","si","ci"],"す":["su"],"せ":["se","ce"],"そ":["so"],"た":["ta"],"ち":["chi","ti"],"つ":["tsu","tu"],"て":["te"],"と":["to"],"な":["na"],"に":["ni"],"ぬ":["nu"],"ね":["ne"],"の":["no"],"は":["ha"],"ひ":["hi"],"ふ":["fu","hu"],"へ":["he"],"ほ":["ho"],"ま":["ma"],"み":["mi"],"む":["mu"],"め":["me"],"も":["mo"],"や":["ya"],"ゆ":["yu"],"よ":["yo"],"ら":["ra"],"り":["ri"],"る":["ru"],"れ":["re"],"ろ":["ro"],"わ":["wa"],"を":["wo"],"ん":["n","nn","xn"],"が":["ga"],"ぎ":["gi"],"ぐ":["gu"],"げ":["ge"],"ご":["go"],"ざ":["za"],"じ":["ji","zi"],"ず":["zu"],"ぜ":["ze"],"ぞ":["zo"],"だ":["da"],"ぢ":["ji","di"],"づ":["zu","du"],"で":["de"],"ど":["do"],"ば":["ba"],"び":["bi"],"ぶ":["bu"],"べ":["be"],"ぼ":["bo"],"ぱ":["pa"],"ぴ":["pi"],"ぷ":["pu"],"ぺ":["pe"],"ぽ":["po"],"きゃ":["kya"],"きゅ":["kyu"],"きょ":["kyo"],"しゃ":["sha","sya"],"しゅ":["shu","syu"],"しょ":["sho","syo"],"ちゃ":["cha","tya"],"ちゅ":["chu","tyu"],"ちょ":["cho","tyo"],"にゃ":["nya"],"にゅ":["nyu"],"にょ":["nyo"],"ひゃ":["hya"],"ひゅ":["hyu"],"ひょ":["hyo"],"みゃ":["mya"],"みゅ":["myu"],"みょ":["myo"],"りゃ":["rya"],"りゅ":["ryu"],"りょ":["ryo"],"ぎゃ":["gya"],"ぎゅ":["gyu"],"ぎょ":["gyo"],"じゃ":["ja","jya","zya"],"じゅ":["ju","jyu","zyu"],"じょ":["jo","jyo","zyo"],"びゃ":["bya"],"びゅ":["byu"],"びょ":["byo"],"ぴゃ":["pya"],"ぴゅ":["pyu"],"ぴょ":["pyo"],"ふぁ":["fa","fwa"],"ふぃ":["fi","fwi"],"ふぇ":["fe","fwe"],"ふぉ":["fo","fwo"],"ー":["-"]};
+const $=x=>document.getElementById(x); let active=false,endAt=0,timer=null,last=-1,current=0,cands=[],score=0,combo=0,clears=0,keys=0,miss=0;
+let coop=false,isHost=false,peer=null,hostConn=null,connections=[],me="",room="",scores={};
+
+function tokens(k){let a=[];for(let i=0;i<k.length;){let p=k.slice(i,i+2);if(R[p]){a.push(p);i+=2}else{a.push(k[i]);i++}}return a}
+function opts(ts,i){if(ts[i]==="っ"&&i+1<ts.length){let n=R[ts[i+1]]||[""];let h=[...new Set(n.map(x=>x[0]).filter(x=>/[a-z]/.test(x)))];return h.length?h:["xtu","ltu"]}return R[ts[i]]||[ts[i]]}
+function romans(k){let ts=tokens(k),a=[""];for(let i=0;i<ts.length;i++){let b=[];for(let x of a)for(let o of opts(ts,i)){b.push(x+o);if(b.length>4000)break}a=b}return [...new Set(a)]}
+function pick(){let n=Math.floor(Math.random()*words.length);if(n===last)n=(n+1)%words.length;last=n;current=n;cands=romans(words[n][1]);$("jp").textContent=words[n][0];$("roman").textContent=cands[0];$("typeInput").value="";paint("")}
+function matches(v){return cands.filter(x=>x.startsWith(v))}
+function paint(v){let t=(matches(v)[0]||cands[0]||"");$("progress").innerHTML='<span style="color:var(--good)"></span><span style="color:var(--muted)"></span>';$("progress").children[0].textContent=v;$("progress").children[1].textContent=t.slice(v.length);$("roman").textContent=t}
+function stats(){ $("score").textContent=score;$("combo").textContent=combo;$("clears").textContent=clears;$("accuracy").textContent=(keys?Math.round(Math.max(0,keys-miss)/keys*100):100)+"%";if(coop)sendScore()}
+function resetStats(){score=combo=clears=keys=miss=0;stats()}
+function begin(at=Date.now()+1200){resetStats();pick();$("gamePanel").classList.remove("hidden");$("home").classList.add("hidden");$("soloStart").classList.toggle("hidden",coop);$("teamBox").classList.toggle("hidden",!coop);$("modeLabel").textContent=coop?"CO-OP":"SOLO";$("typeInput").disabled=true;$("msg").textContent="READY...";let wait=setInterval(()=>{let d=at-Date.now();if(d<=0){clearInterval(wait);active=true;endAt=performance.now()+60000;$("typeInput").disabled=false;$("typeInput").focus();$("msg").textContent="GO！";timer=setInterval(tick,50)}else $("time").textContent="60.0"},50)}
+function tick(){let l=Math.max(0,endAt-performance.now());$("time").textContent=(l/1000).toFixed(1);if(l<=0)finish()}
+function finish(){if(!active)return;active=false;clearInterval(timer);$("typeInput").disabled=true;$("time").textContent="0.0";$("msg").textContent=`終了！ ${clears}問 / ${score}点 / 正確率 ${$("accuracy").textContent}`;sendScore(true)}
+$("typeInput").addEventListener("input",()=>{if(!active)return;let v=$("typeInput").value.toLowerCase();keys++;if(v&&!matches(v).length){miss++;combo=0;$("typeInput").value=v.slice(0,-1);$("msg").textContent="MISS！";paint($("typeInput").value);stats();return}paint(v);if(cands.includes(v)){clears++;combo++;score+=v.length*10+Math.min(combo,10)*10;$("msg").textContent=combo>=3?combo+" COMBO！":"NICE！";stats();pick()}});
+$("soloBtn").onclick=()=>{coop=false;begin(Date.now()+300)};$("coopBtn").onclick=()=>{$("coopSetup").classList.toggle("hidden")};$("soloStart").onclick=()=>begin(Date.now()+300);
+$("backBtn").onclick=()=>location.reload();
+
+function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
+function peerId(c){return "hawtyping-"+c.toLowerCase()}
+function showLobby(){ $("lobby").classList.remove("hidden");$("roomCode").textContent=room;renderPlayers()}
+function renderPlayers(){let names=Object.keys(scores);$("players").innerHTML=names.map(n=>`<li>${esc(n)} <b style="float:right">${scores[n]||0}</b></li>`).join("");$("scoreboard").innerHTML=names.map(n=>`<div class="scoreline"><span>${esc(n)}</span><b>${scores[n]||0}</b></div>`).join("");$("teamScore").textContent=Object.values(scores).reduce((a,b)=>a+b,0)}
+function esc(s){let d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function broadcast(data){connections.forEach(c=>{if(c.open)c.send(data)})}
+function onData(data,conn){if(data.type==="hello"&&isHost){let name=data.name||"Guest";conn.playerName=name;scores[name]=0;renderPlayers();broadcast({type:"roster",scores})}
+ if(data.type==="roster"&&!isHost){scores=data.scores||{};renderPlayers()}
+ if(data.type==="start"){begin(data.at)}
+ if(data.type==="score"){scores[data.name]=data.score||0;renderPlayers();if(isHost)broadcast({type:"roster",scores})}}
+function wire(c){c.on("data",d=>onData(d,c));c.on("close",()=>{if(isHost&&c.playerName){delete scores[c.playerName];renderPlayers();broadcast({type:"roster",scores})}})}
+$("hostBtn").onclick=()=>{me=$("name").value.trim()||"Host";room=code();isHost=true;coop=true;scores={[me]:0};$("netmsg").textContent="接続準備中…";peer=new Peer(peerId(room));peer.on("open",()=>{$("netmsg").textContent="参加者を待っています";showLobby();$("coopStart").classList.remove("hidden")});peer.on("connection",c=>{connections.push(c);wire(c)});peer.on("error",e=>$("netmsg").textContent="接続エラー: "+e.type)};
+$("joinBtn").onclick=()=>{me=$("name").value.trim()||"Guest";room=$("joinCode").value.trim().toUpperCase();if(room.length!==6){alert("6桁のルームコードを入力してね");return}isHost=false;coop=true;scores={[me]:0};$("netmsg").textContent="接続中…";peer=new Peer();peer.on("open",()=>{hostConn=peer.connect(peerId(room),{reliable:true});hostConn.on("open",()=>{wire(hostConn);hostConn.send({type:"hello",name:me});$("netmsg").textContent="接続しました";showLobby()})});peer.on("error",e=>$("netmsg").textContent="接続エラー。コードを確認してね ("+e.type+")")};
+$("coopStart").onclick=()=>{let at=Date.now()+1800;broadcast({type:"start",at});begin(at)};
+function sendScore(){if(!coop)return;scores[me]=score;renderPlayers();let d={type:"score",name:me,score};if(isHost)broadcast({type:"roster",scores});else if(hostConn&&hostConn.open)hostConn.send(d)}
+</script></body></html>
